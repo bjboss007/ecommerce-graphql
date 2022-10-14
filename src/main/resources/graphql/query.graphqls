@@ -1,0 +1,65 @@
+# All available queries on this graphql server
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type  Query{
+    getAllProducts: [Product]
+    getProduct(id: ID!): Product
+    deleteProduct(id: ID!): String
+
+}
+
+type Category{
+    id: ID!
+    name: String
+    description: String
+    subCategories: [String]
+}
+
+#scalar DateTime
+type Product {
+    id: ID!
+    name: String!
+    description: String
+    price: Float
+    comparePrice: Float
+    variants: [String]
+    stocks: Int
+    sold: Int
+    active: Boolean
+    rating: Int
+    tax: Int
+    category: Category!
+}
+
+#fragment productDetails on Product {
+#    id
+#    name
+#    description
+#    price
+#    comparePrice
+#}
+
+input ProductInput{
+    name: String!
+    description: String
+    price: Float!
+    comparePrice: Float
+    variants: [String]
+    stocks: Int!
+}
+
+input CategoryInput{
+    name: String!
+    description: String
+    subCategories: [String]
+}
+
+type Mutation{
+    createProduct(input: ProductInput): Product!
+    createCategory(input: CategoryInput): Category!
+}
+
